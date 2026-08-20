@@ -5,6 +5,7 @@
   --amber: #ffb000;
   --text: #e0e0e0;
   --border-muted: #3a3d44;
+  --blue: #5fa8d3;
 }
 
 * {
@@ -80,7 +81,41 @@ label {
 #login-subtitle {
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #5fa8d3;
+  color: var(--blue);
   font-size: 1.2rem;
   letter-spacing: 0.05em;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+#stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border-muted);
+  padding: 1.5rem;
+}
+
+.card h2 {
+  font-size: 0.9rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.card p {
+  font-size: 1.8rem;
+  color: var(--blue);
 }

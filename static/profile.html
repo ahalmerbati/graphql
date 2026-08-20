@@ -7,10 +7,27 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <button id="logout">Logout</button>
-    <pre id="user"></pre>
-    <pre id="xp"></pre>
-    <pre id="audit"></pre>
+    <header>
+      <h1>SYSTEM PROFILE</h1>
+      <button id="logout">Logout</button>
+    </header>
+
+    <div id="stats">
+      <div class="card">
+        <h2>IDENTITY</h2>
+        <p id="user"></p>
+      </div>
+
+      <div class="card">
+        <h2>TOTAL XP</h2>
+        <p id="xp"></p>
+      </div>
+
+      <div class="card">
+        <h2>AUDIT RATIO</h2>
+        <p id="audit"></p>
+      </div>
+    </div>
 
     <script src="js/api.js"></script>
     <script src="js/profile.js"></script>
