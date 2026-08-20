@@ -30,7 +30,9 @@ function fetchUser() {
 
 // gets all xp-type transactions for the user
 function fetchXP() {
-  return runQuery('{transaction(where: {type: { _eq: "xp" } }) { amount} }');
+  return runQuery(
+    '{ transaction(where: { type: { _eq: "xp" } }, order_by: { createdAt: asc }) { amount createdAt } }',
+  );
 }
 
 // adds up the amount field from an array of xp transactions
@@ -42,7 +44,43 @@ function sumXP(data) {
   }, 0);
 }
 
+// turns a list of xp transactions into a running total over time for the graph
+function cumulativeXP(data) {
+  const transactions = data.data.transaction;
+  let runningTotal = 0;
+  return transactions.map((tx) => {
+    runningTotal += tx.amount;
+    return {
+      date: tx.createdAt,
+      total: runningTotal,
+    };
+  });
+}
+
 // gets the user's audit ratio and total up/down audit numbers
 function fetchAuditRatio() {
   return runQuery("{ user { auditRatio totalUp totalDown } }");
+}
+
+// gets pass/fail grades for all project results
+function fetchResults() {
+  return runQuery(
+    '{ result(where: { object: { type: { _eq: "project" } } }) { grade } }',
+  );
+}
+
+// counts how many results passed vs failed
+function passFailCounts(data) {
+  const results = data.data.result;
+  return results.reduce(
+    (counts, item) => {
+      if (item.grade > 0) {
+        counts.pass = counts.pass + 1;
+      } else {
+        counts.fail = counts.fail + 1;
+      }
+      return counts;
+    },
+    { pass: 0, fail: 0 },
+  );
 }
