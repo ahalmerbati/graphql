@@ -28,10 +28,21 @@ function fetchUser() {
   return runQuery("{user { id login } }");
 }
 
-// gets all xp-type transactions for the user
-function fetchXP() {
+// finds the module event this user is enrolled in
+async function fetchModuleEventId() {
+  const userResult = await runQuery("{ user { id } }");
+  const myId = userResult.data.user[0].id;
+  const eventResult = await runQuery(
+    `{ event(where: { path: { _eq: "/bahrain/bh-module" }, users: { id: { _eq: ${myId} } } }) { id } }`,
+  );
+  return eventResult.data.event[0].id;
+}
+
+// gets all xp-type transactions for the user, scoped to their module event
+async function fetchXP() {
+  const eventId = await fetchModuleEventId();
   return runQuery(
-    '{ transaction(where: { type: { _eq: "xp" } }, order_by: { createdAt: asc }) { amount createdAt objectId } }',
+    `{ transaction(where: { type: { _eq: "xp" }, eventId: { _eq: ${eventId} } }, order_by: { createdAt: asc }) { amount createdAt objectId } }`,
   );
 }
 
@@ -57,20 +68,16 @@ function cumulativeXP(data) {
   });
 }
 
-// removes negative and duplicate xp transactions, keeping only genuine earned xp
+// keeps only the latest xp transaction per project (later resubmissions override earlier ones)
 function cleanXP(data) {
   const transactions = data.data.transaction;
-  const seen = {};
-  const cleaned = transactions.filter((tx) => {
-    if (tx.amount <= 0) {
-      return false;
-    }
-    if (seen[tx.objectId]) {
-      return false;
-    }
-    seen[tx.objectId] = true;
-    return true;
+  const latestByObject = {};
+  transactions.forEach((tx) => {
+    latestByObject[tx.objectId] = tx;
   });
+  const cleaned = Object.values(latestByObject)
+    .filter((tx) => tx.amount > 0)
+    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
   return { data: { transaction: cleaned } };
 }
 

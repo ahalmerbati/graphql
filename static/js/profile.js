@@ -15,8 +15,8 @@ async function loadProfile() {
   const xpData = await fetchXP();
   const cleanedXP = cleanXP(xpData);
   const xp = sumXP(cleanedXP);
-  xpDisplay.textContent = xp.toLocaleString();
-
+  xpDisplay.textContent = Math.round(xp / 1000) + " kB";
+  
   // fetch and display audit info
   const auditDisplay = document.getElementById("audit");
   const auditData = await fetchAuditRatio();
