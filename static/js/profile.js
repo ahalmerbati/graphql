@@ -16,7 +16,7 @@ async function loadProfile() {
   const cleanedXP = cleanXP(xpData);
   const xp = sumXP(cleanedXP);
   xpDisplay.textContent = Math.round(xp / 1000) + " kB";
-  
+
   // fetch and display audit info
   const auditDisplay = document.getElementById("audit");
   const auditData = await fetchAuditRatio();
@@ -28,7 +28,7 @@ async function loadProfile() {
   const coordinates = xpToCoordinates(cumulative, 1000, 280);
   const graphSVG = buildXPGraph(
     coordinates,
-    cumulative[cumulative.length - 1].total,
+    Math.round(cumulative[cumulative.length - 1].total / 1000),
     new Date(cumulative[0].date).toLocaleDateString(),
     new Date(cumulative[cumulative.length - 1].date).toLocaleDateString(),
   );

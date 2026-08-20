@@ -189,6 +189,10 @@ header button {
   #graphs-row {
     padding: 0 1rem;
   }
+
+  #graphs-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* === RESPONSIVE: PHONE === */

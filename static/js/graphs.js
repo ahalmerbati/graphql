@@ -39,8 +39,8 @@ function buildXPGraph(coordinates, maxXP, startDate, endDate) {
     <line x1="0" y1="70" x2="1000" y2="70" stroke="#3a3d44" stroke-width="1" />
     <line x1="0" y1="140" x2="1000" y2="140" stroke="#3a3d44" stroke-width="1" />
     <line x1="0" y1="210" x2="1000" y2="210" stroke="#3a3d44" stroke-width="1" />
-    <text x="1000" y="45" fill="#e0e0e0" font-size="24" text-anchor="end">${maxXP.toLocaleString()}</text>
-    <text x="30" y="190" fill="#e0e0e0" font-size="24">0</text>
+    <text x="960" y="20" fill="#e0e0e0" font-size="24" text-anchor="end">${maxXP} kB</text>    
+    <text x="10" y="250" fill="#e0e0e0" font-size="24">0 kB</text>
     <text x="10" y="308" fill="#5fa8d3" font-size="28">${startDate}</text>
     <text x="990" y="308" fill="#5fa8d3" font-size="28" text-anchor="end">${endDate}</text>
     <polyline points="${points}" fill="none" stroke="#00ff66" stroke-width="2" />
