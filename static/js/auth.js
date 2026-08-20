@@ -9,7 +9,7 @@ async function login(username, password) {
   });
   if (response.ok) {
     const token = await response.text();
-    return token;
+    return JSON.parse(token);
   } else {
     throw new Error(`Login failed: ${response.status} ${response.statusText}`);
   }
