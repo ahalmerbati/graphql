@@ -31,7 +31,7 @@ function fetchUser() {
 // gets all xp-type transactions for the user
 function fetchXP() {
   return runQuery(
-    '{ transaction(where: { type: { _eq: "xp" } }, order_by: { createdAt: asc }) { amount createdAt } }',
+    '{ transaction(where: { type: { _eq: "xp" } }, order_by: { createdAt: asc }) { amount createdAt objectId } }',
   );
 }
 
@@ -57,6 +57,23 @@ function cumulativeXP(data) {
   });
 }
 
+// removes negative and duplicate xp transactions, keeping only genuine earned xp
+function cleanXP(data) {
+  const transactions = data.data.transaction;
+  const seen = {};
+  const cleaned = transactions.filter((tx) => {
+    if (tx.amount <= 0) {
+      return false;
+    }
+    if (seen[tx.objectId]) {
+      return false;
+    }
+    seen[tx.objectId] = true;
+    return true;
+  });
+  return { data: { transaction: cleaned } };
+}
+
 // gets the user's audit ratio and total up/down audit numbers
 function fetchAuditRatio() {
   return runQuery("{ user { auditRatio totalUp totalDown } }");
@@ -65,7 +82,7 @@ function fetchAuditRatio() {
 // gets pass/fail grades for all project results
 function fetchResults() {
   return runQuery(
-    '{ result(where: { object: { type: { _eq: "project" } } }) { grade } }',
+    '{ result(where: { object: { type: { _eq: "project" } } }) { grade object { name } } }',
   );
 }
 

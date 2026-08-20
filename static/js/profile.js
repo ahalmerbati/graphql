@@ -13,7 +13,8 @@ async function loadProfile() {
   // fetch and display xp info
   const xpDisplay = document.getElementById("xp");
   const xpData = await fetchXP();
-  const xp = sumXP(xpData);
+  const cleanedXP = cleanXP(xpData);
+  const xp = sumXP(cleanedXP);
   xpDisplay.textContent = xp.toLocaleString();
 
   // fetch and display audit info
@@ -23,7 +24,7 @@ async function loadProfile() {
 
   // fetch and display xp graph
   const xpGraph = document.getElementById("xp-graph");
-  const cumulative = cumulativeXP(xpData);
+  const cumulative = cumulativeXP(cleanedXP);
   const coordinates = xpToCoordinates(cumulative, 1000, 280);
   const graphSVG = buildXPGraph(
     coordinates,
