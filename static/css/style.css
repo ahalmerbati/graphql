@@ -173,3 +173,65 @@ header button {
   margin-bottom: 1rem;
   letter-spacing: 0.05em;
 }
+
+/* === RESPONSIVE: TABLET === */
+@media (max-width: 900px) {
+  header {
+    font-size: 22px;
+    padding: 1.5rem;
+  }
+
+  #login-title {
+    font-size: 1.5rem;
+  }
+
+  #stats,
+  #graphs-row {
+    padding: 0 1rem;
+  }
+}
+
+/* === RESPONSIVE: PHONE === */
+@media (max-width: 600px) {
+  header {
+    grid-template-columns: 1fr auto;
+    font-size: 16px;
+    padding: 1rem;
+  }
+
+  header h1 {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  header button {
+    grid-column: 2;
+  }
+
+  #logout {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+
+  #login-form {
+    padding: 1.5rem;
+  }
+
+  #login-title {
+    font-size: 1.1rem;
+  }
+
+  #login-subtitle {
+    font-size: 0.9rem;
+  }
+
+  #stats,
+  #graphs-row {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+
+  .card p {
+    font-size: 1.3rem;
+  }
+}
