@@ -1,3 +1,4 @@
+// logs in with basic auth and returns the jwt
 async function login(username, password) {
   const url = "https://learn.reboot01.com/api/auth/signin";
   const credentials = btoa(username + ":" + password);
